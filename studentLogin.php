@@ -41,7 +41,7 @@
                 border: none;
                 outline: none;
                 width: 100%;
-                color: rgba(255, 255, 255, 0);
+                color: black;
                 height: 30px;
                 font-size: 15px;
             }
@@ -76,10 +76,10 @@
     </body>
 </html>
 <?php
-$conn = mysqli_connect("localhost", "root", "", "student_login"); // specify the database name
+$conn = mysqli_connect("localhost", "root", "", "studentdetails"); // specify the database name
 if(isset($_POST['login_Btn'])){
     $idnumber = $_POST['idnumber'];
-    $sql = "SELECT * FROM student_details WHERE idnumber = '$idnumber'";
+    $sql = "SELECT * FROM studtable WHERE idnumber = '$idnumber'";
     $result = mysqli_query($conn, $sql); // execute the query
 
     if ($result) { // check if the query was successful
