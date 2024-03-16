@@ -13,10 +13,9 @@
             h1{
                 text-align: center;
                 margin-bottom: 65px;
-                color: yellow;
+                color: white;
                 font-size: 45px;
-                font-family: cursive;                
-                font-weight: 400;
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;                
             }
             p{
                 text-align: left;
@@ -86,50 +85,38 @@
         </style>
     </head>
     <body>
-        <form>
-            <h1>REDEEM REWARD</h1><br><br>
+        <form method="post" action="">
+            <h1>REDEEM REWARD</h1>
+                <?php
+                   $servername="localhost";
+                   $username="root";
+                   $password="";
+                   $dbname="studentdetails";
+
+                   $conn=mysqli_connect($servername, $username, $password, $dbname);
+                   if(!$conn){
+                    die('connection error:'. mysqli_connect_error());
+                   }
+                   $connectDb=mysqli_select_db($conn,'studentdetails');
+                   $result=mysqli_query($conn,'select idnumber,bottlesCollected,cansCollected,rewardPts from studtable');
+                   while($row=mysqli_fetch_array($result)){
+                    ?>
+                        <p class="txt">Recycler ID Number:</p>
+                        <input type="text" name="idnumber" value="<?php echo $row['idnumber']; ?>">
+                        <p class="txt">Number of plastic bottles collected:</p>
+                        <input type="text" name="idnumber" value="<?php echo $row['bottlesCollected']; ?>">
+                        <p class="txt">Number of cans collected:</p>
+                        <input type="text" name="idnumber" value="<?php echo $row['cansCollected']; ?>">
+                        <p class="txt">Total redeemable points:</p>
+                        <input type="text" name="idnumber" value="<?php echo $row['rewardPts']; ?>">
+                    <?php
+                   }
+
+                ?>
             <div class="container">
-                <input type="submit" value="Generate QR" class="GenerateQRBtn" name="GenerateQR_Btn" >
+                <input type="submit" value="Generate QR" class="GenerateQRBtn" name="GenerateQR_Btn">
                 <input type="submit" value="Go Back" class="GoBackBtn" name="GoBack_Btn" formaction="studentDashboard.php" target="_blank">
             </div>
         </form>
-        <div class="rowDB">
-                <hr>
-                <?php
-                    $con = mysqli_connect("localhost", "root", "", "student_login");
-                    if(isset($_GET['idnumber'])){
-                        $idnumber = $_GET['idnumber'];
-                        $query = "SELECT * FROM student_details WHERE id='$idnumber'";
-                        $query_run = mysqli_query($con, $query);
-                        
-                        if(mysqli_num_rows($query_run) > 0){
-                            foreach($query_run as $row){
-                                ?>
-                                <div class="container">
-                                    <p class="txt">Recycler ID Number:</p>
-                                    <input type="text" value="<?= $row['idnumber']; ?>" class="form-control">
-                                </div>
-                                <div class="container">
-                                    <p class="txt">Redeemable Points Earned:</p>
-                                    <input type="text"  class="form-control">
-                                </div>
-                                <div class="container">
-                                    <p class="txt">Number of Plastic Bottles Collected:</p>
-                                    <input type="text"  class="form-control">
-                                </div>
-                                <div class="container">
-                                    <p class="txt">Number of Cans Collected:</p>
-                                    <input type="text"  class="form-control">
-                                </div>
-                                <?php
-                            }
-                        }
-                        else{
-                            echo "No Record Found!";
-                        }
-                    }
-                ?>
-   
-            </div>
     </body>
 </html>
